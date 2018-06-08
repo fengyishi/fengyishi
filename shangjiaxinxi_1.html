@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+            <meta content="width=device-width,initial-scale=1,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" name="viewport"/>
+            <title>
+                商家信息
+            </title>
+            <script src="<{$weburl}>/templates/m/js/jquery-1.8.3.min.js">
+            </script>
+            <!--<script src="<{$weburl}>/templates/m/js/swiper-3.4.0.min.js"></script>-->
+            <link href="<{$weburl}>/templates/m/css/style.css" rel="stylesheet" type="text/css"/>
+            <link href="<{$weburl}>/templates/m/css/media.css" rel="stylesheet" type="text/css"/>
+            <script src="<{$weburl}>/templates/default/<{$setting.templates}>/js/jquery-form.js" type="text/javascript">
+            </script>
+            <script src="<{$weburl}>/templates/m/js/phoneFontSize.js">
+            </script>
+            <script src="<{$weburl}>/templates/m/js/nativeShare.js">
+            </script>
+            <link href="<{$weburl}>/templates/m/css/nativeShare.css" rel="stylesheet"/>
+            <style>
+                .mask-img {
+        display: none; 
+        position: fixed; 
+        top: 0; 
+        left: 0; 
+        width: 100%; 
+        height: 100%; 
+        z-index: 10; 
+        background-color:#828282;
+        opacity:0.5;
+      }
+    .bImg{
+        width: 80%;
+        height: 80%;
+        position: absolute;
+        z-index: 20;
+        margin-left: 0.7rem;
+        bottom: 0.4rem;
+    }
+            </style>
+            <style type="text/css">
+                /*弹出层的STYLE*/
+        .lingqu,.chouzhong {
+            font-family:"宋体";
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            text-align: center;
+            z-index:99;
+            border-radius: 0.3rem;
+            position:fixed!important;/*FF IE7*/
+            position:absolute;/*IE6*/
+        }
+        .lingqu{
+            border:1px solid #FFF;
+            background-image:url(/templates/m/img/bg.png);
+            width: 5rem;
+            height: 6rem;}
+        .lingqu hr{
+            width:80%; 
+            background-color:#fff; 
+            height: 0.02rem; 
+            border:none; 
+            opacity: 0.5; 
+            margin-top: 0.35rem; 
+            margin-bottom:0.35rem;
+        }
+        .chouzhong{
+            background-image:url(/templates/m/img/bg_2.png);
+            height: 6rem;
+            width: 8rem;
+        }
+        .chouzhong_title{
+             font-size: 0.3rem; font-family: '微软雅黑'; color:#666666;margin-top: 5.4em;margin-left: 1.5em;
+        }
+        .chouzhong_content{
+            width: 2rem; margin-left: 3rem; height:0.5rem; background-image:url(/templates/m/img/10m.png); background-repeat: no-repeat; background-size: 100% 100%;margin-top: 0.5rem;margin-bottom: 1rem;
+        }
+        .chouzhong_content span{
+            font-size: 0.4rem;
+            color: #fd7400;
+        }
+        /* .lingqu a{
+            background-image:url(/templates/m/img/close.png);
+            background-repeat: no-repeat;
+            background-size: 100% 80%;
+            margin-right: 1rem;
+            margin-top: 1rem;
+            text-decoration: none;
+        } */
+        .lingqu .title{
+            width:100%; margin-top:0.45rem; text-shadow: 0.05rem 0.05rem 0.05rem #000; color: #ffd688; font-size: 0.45rem;opacity:0.8; font-family: 'MFLangQian_Noncommercial-Regular'
+        }
+        .lingqu .biaozhu{
+            font-size: 0.05rem; color: #fff; margin-top:0.22rem;
+        }
+        .lingqu .lucky{
+            width:100%; 
+            color:#fff; 
+            margin-top:0.2rem; 
+            font-size:0.22rem; 
+            opacity: 0.8;
+
+        }
+        .lingqu .input1{
+            width:100%;
+            margin-top: -0.1rem;
+            margin-bottom:0.5rem;
+            text-align: center;}
+        .lingqu .input2{
+            width:100%;
+            margin-bottom:0.1rem;
+            text-align: center;
+        }
+        .lingqu .input1 input{
+            height:0.6rem;
+            width:4rem;
+            border-radius:0.25rem;
+            border-color: none;
+            color:#999999;
+            font-family: "黑体";
+            font-size: 0.25rem;
+            text-align: center;
+        }
+
+        .lingqu .input2 input{
+            width:1.35rem;
+            height:1.35rem;
+            border-radius: 50%;
+            text-decoration: none;
+            border-color: none;
+            background-image:url(/templates/m/img/yes.png);
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+        }
+        input{
+            border: none;
+        }
+        .bg {
+            background-color: #ccc;
+            width: 100%;
+            height: 100%;
+            left:0;
+            top:0;/*FF IE7*/
+            filter:alpha(opacity=50);/*IE*/
+            opacity:0.5;/*FF*/
+            z-index:1;
+            position:fixed!important;/*FF IE7*/
+            position:absolute;/*IE6*/
+        }
+        input[type=text]:focus{
+            color:#000;
+        }
+        #sj{
+            margin-bottom:1.2rem;
+
+        }
+        img{
+            text-decoration: none;
+        }
+        .lingqu .top{
+            width: 100%;
+        }
+        .lingqu .top a{
+            position: absolute;
+            top:0.1rem;
+            right: 0.1rem;
+            width: 0.4rem;
+            height: 0.4rem;
+            float: right;
+            background-image:url(/templates/m/img/close.png); 
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            text-decoration: none;
+            /*display: inline;  margin:0 0 0 100px; 这种情况之下IE会产生200px的距离,inline使浮动忽略*/
+        }
+            </style>
+            <script type="text/javascript">
+                function showDiv(){
+            document.getElementById('popDiv').style.display='block';
+            document.getElementById('bg').style.display='block';
+            var div1 = document.getElementById('popDiv');
+            div1.style.top=(document.documentElement.clientHeight-div1.offsetHeight)/2+"px";
+            div1.style.left=(document.documentElement.clientWidth-div1.offsetWidth)/2+"px";
+        }
+
+        function closeDiv(){
+            document.getElementById('popDiv').style.display='none';
+            document.getElementById('bg').style.display='none';
+        }
+        function showDiv2(){
+            document.getElementById('popDiv').style.display='none';
+            document.getElementById('popDiv2').style.display='block';
+            document.getElementById('bg').style.display='block';
+            var div2 = document.getElementById('popDiv2');
+            div2.style.top=(document.documentElement.clientHeight-div2.offsetHeight)/2+"px";
+            div2.style.left=(document.documentElement.clientWidth-div2.offsetWidth)/2+"px";
+        }
+        /*function getCookie(cname) {
+            var name = cname + "=";
+            var ca = document.cookie.split(';');
+            for(var i=0; i<ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0)==' ') c = c.substring(1);
+                if (c.indexOf(name) != -1) return c.substring(name.length, c.length);
+            }
+            return "";
+        }
+        function checkCookie() {
+            $.ajax({
+                type:"POST",
+                url:"mobile.php?m=shop",
+                data:{"stuas":1},
+                dataType:"json",
+                success:function (data) {
+                    if (data.stuas == 1) {
+                        showDiv();
+                    }else{
+                         window.location.href='https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx42a193d6b277b52b&redirect_uri=http%3a%2f%2fwww.xiyuandyc.com%2fmobile.php%3fm%3dmwxlogin%26id%3d<{$shopid}>&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect';
+                    }
+                    
+                }
+            })
+        }*/
+            </script>
+            <script type="text/javascript">
+                $(document).ready(function(){
+            //var tel = $("#shoujihao").val();
+            $("#queren").click(function(){
+                //var str = $(this).val();
+                function ajax_enctype(x){
+                    $.ajax({
+                        type:"POST",
+                        url:"mobile.php?m=ajax_mobile",
+                        data:{"shoujihao":x},
+                        dataType:"json",
+                        success:function(data)
+                        {
+                            if(data.state === 1){
+                                $("#shoujihao").val("此手机号已经抽奖过！3秒后退出");
+                                $("#shoujihao").css("color","red");
+                                setTimeout(function(){
+                                document.getElementById('popDiv').style.display='none';
+                                document.getElementById('popDiv2').style.display='none';
+                                document.getElementById('bg').style.display='none';
+                            },3000)
+                                return false;
+                            }else if(data.state === 0){
+                                $.ajax({
+                                    url:"mobile.php?m=order",
+                                    data:{"shoujihao":tel},
+                                    type:"POST",
+                                    dataType:"json",
+                                    success: function(data){
+                                        $('#num').html(data.ll);
+                                        $('#num1').html(data.ll);
+                                        showDiv2();
+                                    }
+                                });
+                            }
+                        }
+                    });
+                }
+                var tel = $("#shoujihao").val();
+                var length = tel.length;
+                if (length === '' || tel === undefined) {
+                    $("#shoujihao").val("请输入正确的手机号！");
+                    $("#shoujihao").css("color","red");
+                }
+                if (tel !== "" && length === 11) {
+                    (ajax_enctype(tel));
+                }else{
+                    $("#shoujihao").val("请输入正确的手机号！")
+                }
+            })
+
+        })
+            </script>
+        </meta>
+    </head>
+    <body id="sjxx" onload="showDiv()">
+        <?php include_once("../../../baidu_js_push.php") ?>
+        <div class="dy_header">
+            <a class="left_icon" href="javascript:history.go(-1);">
+                <
+            </a>
+            <h1 class="tit">
+                商家店铺信息
+            </h1>
+            <a class="right_icon" href="<{$weburl}>/mobile.php?">
+                首页>
+            </a>
+        </div>
+        <{include file="m/shop_head.html" }>
+        <div id="mb_box">
+        </div>
+        <div id="nativeShare" style="position: fixed;background-color: #fff;bottom: 0rem;width: 100%;height: 4rem;padding-left: 0.3rem;z-index: 999999;display: none">
+        </div>
+        <ul class="tab_nav">
+            <li class="list ac">
+                <a href="<{$weburl}>/mobile.php?m=shop&id=<{$shopid}>">
+                    店铺信息
+                </a>
+            </li>
+            <li class="list">
+                <a href="<{$weburl}>/mobile.php?m=shop&a=cars&id=<{$shopid}>">
+                    在售车源
+                </a>
+            </li>
+            <li class="list">
+                <a href="<{$weburl}>/mobile.php?m=shop&a=comment&id=<{$shopid}>">
+                    店铺评价
+                </a>
+            </li>
+        </ul>
+        <ul class="tab_con">
+            <li class="tab_list">
+                <div class="lianxi_box">
+                    <p class="p1">
+                        联系人：
+                        <span>
+                            <{$shop.nicname}>
+                        </span>
+                    </p>
+                    <!--<p class="p1">固话：<span><{$shop.tel}></span></p>-->
+                    <!-- <p class="p1">联系方式：<span><{$shop.mobilephone}></span></p> -->
+                    <p class="p1">
+                        商铺信用：
+                        <span>
+                            <img src="/templates/default/default/img/cxq_05.png"/>
+                        </span>
+                    </p>
+                    <p class="p1">
+                        地址：
+                        <span>
+                            <{$shop.address}>
+                        </span>
+                    </p>
+                    <p class="p1">
+                        浏览量：
+                        <span>
+                            <{$shop.login_count}>
+                        </span>
+                        收藏量：
+                        <span>
+                            <{$hits}>
+                        </span>
+                        交易量：
+                        <span>
+                            <{$selldone}>
+                        </span>
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </body>
+</html>
+<div class="mask-img">
+</div>
+<div id="bigImg">
+</div>
+<div class="floor one">
+    <h2 class="tit_01">
+        商家二维码
+    </h2>
+    <img class="erweima" id="imgClick" src="<{$shop.twocode}>"/>
+    <div class="p2">
+        扫一扫加关注
+    </div>
+</div>
+<div class="lingqu" id="popDiv" style="display:none;">
+    <div class="top" id="quxiao">
+        <a href="javascript:;">
+        </a>
+    </div>
+    <div class="title">
+        <span style="font-size:0.65rem;margin-right: -0.2rem;">
+            百兆
+        </span>
+        流量进店免费送
+    </div>
+    <hr/>
+    <div class="lucky">
+        幸运的你赶紧来试试手气！
+    </div>
+    <div class="input1">
+        <input autocomplete="off" id="shoujihao" name="shoujihao" onfocus="if(this.value=='请输入正确的手机号！'||this.value=='请输入你的手机号！'){this.value=''};this.style.color='black';" placeholder="请输入你的手机号" type="text"/>
+    </div>
+    <div class="input2">
+        <input id="queren" type="button"/>
+    </div>
+    <div class="biaozhu">
+        标注：随机赠送10M、20M、50M、100M流量
+    </div>
+</div>
+<div class="chouzhong" id="popDiv2" style="display:none;">
+    <div class="chouzhong_title">
+        <b>
+            恭喜你！
+            <br>
+                人品爆发抽中
+                <span id="num">
+                </span>
+                M流量
+            </br>
+        </b>
+    </div>
+    <div class="chouzhong_content">
+        <span id="num1" style="position: absolute;left: 9em">
+        </span>
+    </div>
+    <div>
+        <img id="lingquliuliang" src="/templates/m/img/button.png">
+        </img>
+    </div>
+</div>
+<div class="bg" id="bg" style="display:none;">
+</div>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js">
+</script>
+<{include file="m/foot_1.html" }>
+<script>
+    $('#quxiao').click(function(){
+        closeDiv();
+    })
+</script>
+<script>
+    $("#imgClick").bind('click',function() {
+        console.log(1)
+        $(".mask-img").css({"display":"block"})
+        $("#bigImg").append("<div class='baoguo'><img src='<{$shop.twocode}>' class='bImg'/></div>")
+    })
+    $(".mask-img").bind('click',function() {
+        $(".mask-img").css({"display":"none"})
+        $(".baoguo").remove()
+    })
+</script>
+<script>
+    wx.config({
+   debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+   appId: '<{$appid}>', // 必填，公众号的唯一标识
+   timestamp:<{$timestamp}> , // 必填，生成签名的时间戳
+   nonceStr: '<{$nonceStr}>', // 必填，生成签名的随机串
+   signature: '<{$signature}>',// 必填，签名，见附录1
+   jsApiList: ['onMenuShareAppMessage','onMenuShareTimeline','onMenuShareQQ'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+ });
+ 
+ wx.ready(function(){
+  //分享给朋友
+  wx.onMenuShareAppMessage({
+    title: '<{$shop.company}>-熹源抵押车', // 分享标题
+    desc: '熹源抵押车平台集买车、卖车、求购、抵押贷款、车险购买等于一体的一站式优质服务平台。', //分享描述
+    imgUrl: 'http://www.xiyuandyc.com<{$shop.logo}>',
+    link:  'http://www.xiyuandyc.com/mobile.php?m=shop&id=<{$shopid}>', // 分享链接
+    type: 'link', // 分享类型,music、video或link，不填默认为link
+    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+    success: function () {
+       alert('分享成功');
+    },
+    cancel: function () {
+      // 用户取消分享后执行的回调函数
+      // alert('取消分享');
+    }
+  });
+    wx.onMenuShareTimeline({
+        title: '<{$shop.company}>-熹源抵押车', // 分享标题
+        link: 'http://www.xiyuandyc.com/mobile.php?m=shop&id=<{$shopid}>', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+        imgUrl: 'http://www.xiyuandyc.com<{$shop.logo}>', // 分享图标
+        success: function () {
+        // 用户点击了分享后执行的回调函数
+    }
+    });
+    wx.onMenuShareQQ({
+        title: '<{$shop.company}>-熹源抵押车', // 分享标题
+        desc: '熹源抵押车平台集买车、卖车、求购、抵押贷款、车险购买等于一体的一站式优质服务平台。', // 分享描述
+        link: 'http://www.xiyuandyc.com/mobile.php?m=shop&id=<{$shopid}>', // 分享链接
+        imgUrl: 'http://www.xiyuandyc.com<{$shop.logo}>', // 分享图标
+        success: function () {
+        // 用户确认分享后执行的回调函数
+        },
+        cancel: function () {
+        // 用户取消分享后执行的回调函数
+    }
+    });
+
+ });
+</script>
+<script>
+    var config = {
+        url:'http://www.xiyuandyc.com/mobile.php?m=shop&id=<{$shopid}>',  
+        title:'<{$shop.company}>-熹源抵押车',
+        desc:'熹源抵押车平台集买车、卖车、求购、抵押贷款、车险购买等于一体的一站式优质服务平台。',
+        img: 'http://www.xiyuandyc.com<{$shop.logo}>',
+        img_title:'熹源抵押车',
+        from:'熹源抵押车'
+    };
+    var share_obj = new nativeShare('nativeShare',config);
+</script>
+<script>
+    $("#fenxiang").bind("click", function() {
+        $("#nativeShare").toggle("fast",function() {
+            $("#mb_box").css({
+                width: '100%',
+                height: '100%',
+                zIndex: '99',
+                position: 'fixed',
+                filter: 'Alpha(opacity=60)',
+                backgroundColor: 'black',
+                top: '0',
+                left: '0',
+                opacity: '0.7'
+            });
+        }) 
+    })
+     $("#mb_box").bind("click",function () {
+            $("#nativeShare").toggle("fast",function() {
+                $("#mb_box").css({
+                width: '0%',
+                height: '0%',
+                zIndex: '-1',
+                position: 'fixed',
+                filter: 'Alpha(opacity=60)',
+                backgroundColor: 'black',
+                top: '0',
+                left: '0'
+            });
+        }) 
+     })
+</script>
+<script>
+    $('#lingquliuliang').bind("click",function(){
+                document.getElementById('popDiv2').style.display='none';
+                 document.getElementById('bg').style.display='none';
+            })
+</script>
